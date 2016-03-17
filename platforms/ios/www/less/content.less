@@ -1,0 +1,523 @@
+/* override Ionic default content classes */
+.view-container{
+  background-color: @global-bg-color;
+}
+
+.wo-content.scroll-content.ionic-scroll{
+  padding: @overall-padding;
+  padding-top: @overall-top-offset;
+
+  &.night{
+    background-color: @night-sky;
+
+    .wo-header,
+    .wo-content-city .weather-temp{
+      color: white;
+    }
+  }
+}
+
+.wo-content-horz{
+  .scroll{
+    height: 100%;
+  }
+}
+
+.wo-content-city{
+  @content-city-height: auto;
+
+  position: relative;
+  height: @content-city-height;
+  width: 100%;
+  background: transparent;
+  padding: 15px;
+  box-sizing: border-box;
+
+  .weather-banner{
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    height: 160px;
+
+    background: url('../img/weathers/clear.png') no-repeat center center;
+    background-size: contain;
+  }
+
+  .weather-temp{
+    position: relative;
+    width: auto;
+    margin: 15px auto 0 auto;
+    height: @font-xxxxl;
+    line-height: @font-xxxxl;
+    text-align: center;
+    font-size: @font-xxxxl;
+    font-weight: 100;
+
+    label{
+      font-size: 70%;
+      vertical-align: top;
+      position: relative;
+      top: -10px;
+      font-weight: 100;
+    }
+  }
+
+  .weather-info{
+    @info-height: 40px;
+
+    height: @info-height;
+    width: 100%;
+    position: relative;
+    color: @gray;
+    margin-top: 10px;
+
+    .info-item{
+      position: absolute;
+      top: 0px;
+      height: @info-height;
+      width: auto;
+
+      &:first-child{
+        left: 0px;
+      }
+
+      &:last-child{
+        right: 0px;
+      }
+
+      img{
+        display: inline-block;
+        height: @info-height / 2;
+        vertical-align: top;
+        margin-right: 5px;
+      }
+
+      .info{
+        width: auto;
+        display: inline-block;
+      }
+    }
+  }
+
+  &.clouds{
+    .weather-banner{
+      background: url('../img/weathers/clouds.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.clear{
+    .weather-banner{
+      background: url('../img/weathers/clear.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.rain{
+    .weather-banner{
+      background: url('../img/weathers/rain.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.snow{
+    .weather-banner{
+      background: url('../img/weathers/snow.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  /* night variants */
+  &.night{
+    /* default fall back */
+    .weather-banner{
+      background: url('../img/weathers/clear-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.clouds .weather-banner{
+      background: url('../img/weathers/clouds-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.clear .weather-banner{
+      background: url('../img/weathers/clear-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.rain .weather-banner{
+      background: url('../img/weathers/rain-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.snow .weather-banner{
+      background: url('../img/weathers/snow-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+}
+
+.wo-horizontal-ls{
+  white-space: nowrap;
+  position: relative;
+  font-size: 0px;
+
+  li{
+    position: relative;
+    display: inline-block;
+  }
+}
+
+.wo-vertical-ls{
+  width: 100%;
+}
+
+.wo-content-mini{
+  .title,
+  .temp{
+    color: @global-bg-color;
+    width: 100%;
+    text-align: center;
+    font-size: @font-m;
+    margin-top: 20px;
+  }
+
+  .icon{
+    @size: 100px;
+
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin-top: 50px;
+    background: url('../img/weathers/clouds.png') no-repeat center center;
+    background-size: contain;
+  }
+
+  .temp{
+    position: absolute;
+    bottom: 15px;
+  }
+
+  &.clouds{
+    background: @clouds;
+
+    .icon{
+      background: url('../img/weathers/clouds.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.clear{
+    background: @clear;
+
+    .icon{
+      background: url('../img/weathers/clear.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.rain{
+    background: @rain;
+
+    .icon{
+      background: url('../img/weathers/rain.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.snow{
+    background: @snow;
+
+    .icon{
+      background: url('../img/weathers/snow.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+}
+
+.wo-content-med{
+  @height: 100px;
+  @icon-width: 100px;
+  @temp-width: 58px;
+  @padding: 15px;
+
+  position: relative;
+  width: 100%;
+  height: @height;
+  margin: 8px 0px;
+  border-radius: 3px;
+  overflow: hidden;
+  color: @global-bg-color;
+  box-shadow: @form-shadow;
+  background-color: @clouds;
+
+  a{
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: @global-bg-color;
+  }
+
+  .info,
+  .icon,
+  .temp{
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    display:inline-block;
+    height: @height;
+  }
+
+  .info{
+    width: auto;
+    left: @padding;
+    padding: 15px 0;
+
+    .city{
+      font-size: @font-xxl;
+      margin: 9px 0px;
+    }
+    .time{
+      font-size: @font-s;
+      opacity: 0.8;
+    }
+  }
+
+  .icon{
+    @space: 12px;
+
+    right: @temp-width+@padding;
+    width: @icon-width - 2 * @space;
+    height: @height - 2 * @space;
+    top: @space;
+    background: url('../img/weathers/clear.png') no-repeat center center;
+    background-size: cover;
+  }
+
+  .temp{
+    right: @padding;
+    width: @temp-width;
+    line-height: @height;
+    vertical-align: middle;
+    text-align: right;
+    font-size: @font-xxxl;
+    font-weight: 100;
+
+    sup{
+      margin-left: -8px;
+      font-size: 60%;
+    }
+  }
+
+  &:active{
+    opacity: 0.9;
+    box-shadow: @form-shadow-rise;
+  }
+
+  &.clouds{
+     background-color: @clouds;
+
+     .icon{
+       background: url('../img/weathers/clouds.png') no-repeat center center;
+       background-size: contain;
+     }
+   }
+
+  &.clear{
+    background-color: @clear;
+
+    .icon{
+      background: url('../img/weathers/clear.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.rain{
+    background-color: @rain;
+
+    .icon{
+      background: url('../img/weathers/rain.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.snow{
+    background-color: @snow;
+
+    .icon{
+      background: url('../img/weathers/snow.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  /* night varaiants */
+  &.night{
+    background-color: @night-sky !important;
+    .icon{
+      background: url('../img/weathers/clear-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.clouds .icon{
+      background: url('../img/weathers/clouds-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.clear .icon{
+      background: url('../img/weathers/clear-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.rain .icon{
+      background: url('../img/weathers/rain-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.snow .icon{
+      background: url('../img/weathers/snow-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+}
+
+.wo-content-sm{
+  @info-height: 40px;
+  @icon-height: 90px;
+  @temp-height: 40px;
+  @height: @info-height + @icon-height + @temp-height;
+  @width: 100px;
+  @padding: 15px;
+
+  position: absolute;
+  width: @width;
+  height: @height;
+  left: 50%;
+  top: 50%;
+  margin-left: -@width / 2;
+  margin-top: -@height * 1.35;
+  border-radius: 3px;
+  overflow: hidden;
+  color: @dark-gray;
+  box-shadow: @form-shadow;
+  background-color: @clouds;
+  z-index: 999;
+
+  .info,
+  .icon,
+  .temp{
+    z-index: 2;
+    position: absolute;
+    left: 0px;
+    width: @width;
+  }
+
+  .info{
+    width: @width;
+    height: @info-height;
+    line-height: @info-height;
+    top: 0px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: @font-l;
+  }
+
+  .icon{
+    @space: 20px;
+
+    width: @width - 2 * @space;
+    height: @icon-height;
+    left: @space;
+    top: @info-height;
+    background: url('../img/weathers/clear.png') no-repeat center center;
+    background-size: contain;
+  }
+
+  .temp{
+    height: @temp-height;
+    line-height: @temp-height;
+    top: @info-height + @icon-height - 10px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: @font-xxl;
+    font-weight: 100;
+
+    sup{
+      margin-left: -8px;
+      font-size: 60%;
+    }
+  }
+
+  &:active{
+    opacity: 0.9;
+    box-shadow: @form-shadow-rise;
+  }
+
+  &.clouds{
+    background-color: @clouds;
+
+    .icon{
+      background: url('../img/weathers/clouds.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.clear{
+    background-color: @clear;
+
+    .icon{
+      background: url('../img/weathers/clear.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.rain{
+    background-color: @rain;
+
+    .icon{
+      background: url('../img/weathers/rain.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.snow{
+    background-color: @snow;
+
+    .icon{
+      background: url('../img/weathers/snow.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  /* night varaiants */
+  &.night{
+    /* default fall back for night content */
+    background-color: @night-sky !important;
+    .icon{
+      background: url('../img/weathers/clear-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.clouds .icon{
+      background: url('../img/weathers/clouds-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.clear .icon{
+      background: url('../img/weathers/clear-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.rain .icon{
+      background: url('../img/weathers/rain-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+
+    &.snow .icon{
+      background: url('../img/weathers/snow-nt.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+}

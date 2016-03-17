@@ -1,0 +1,58 @@
+/*
+ An element contains text at the center of the element
+ */
+.center-text{
+  width: 100%;
+  height: auto;
+  margin: 5px 10px;
+  text-align: center;
+  color: #666;
+}
+
+/*
+ Define a element that will constantly spin
+ */
+.spin{
+  animation: rotate 0.8s linear 0s infinite;
+
+  @-webkit-keyframes rotate {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+  }
+
+  @-moz-keyframes rotate {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(360deg);}
+  }
+
+  @keyframes rotate {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+  }
+}
+
+/*
+  Color helper function
+ */
+.clear-bg{
+  background-color: @clear;
+}
+.clouds-bg{
+  background-color: @clouds;
+}
+.rain-bg{
+  background-color: @rain;
+}
+.snow-bg{
+  background-color: @snow;
+}
+.mist-bg{
+  background-color: @mist;
+}
+.haze-bg{
+  background-color: @haze;
+}
+.drizzle-bg{
+  background-color: @drizzle;
+}
+

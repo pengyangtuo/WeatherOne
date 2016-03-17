@@ -1,0 +1,33 @@
+/* override ionic inset input */
+.wo-inset{
+  box-shadow: @form-shadow;
+  margin: 0px;
+
+  .item.item-input {
+    padding: 0px;
+
+    .placeholder-icon {
+      @size: 40px;
+
+      font-size: @font-m;
+      width: @size;
+      height: @size;
+      line-height: @size;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0px;
+      margin: 2px 7px;
+      color: #666;
+
+      &.offset {
+        margin-right: -14px;
+      }
+
+    }
+
+    input {
+      padding: 2px 0px !important;
+      font-size: @font-s;
+    }
+  }
+}

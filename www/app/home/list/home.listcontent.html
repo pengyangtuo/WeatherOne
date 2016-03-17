@@ -1,0 +1,45 @@
+<!-- spinner -->
+<div class="sp-wrapper" ng-show="loadingList">
+  <div class="sp-overlay"></div>
+  <div class="sp sp-circle large colorful"></div>
+</div>
+
+<ion-content class="wo-content" ng-init="hasFav=true" id="home-list">
+
+  <ion-refresher
+    pulling-text="Pull to refresh..."
+    on-refresh="doRefresh()">
+  </ion-refresher>
+
+  <!-- first landing options -->
+  <div class="center-text" ng-show="!hasFav">
+    - or -
+  </div>
+  <button class="button button-block flat-btn blue" ng-show="!hasFav">
+    See your local weather
+  </button>
+
+  <!-- favourite location list -->
+  <ul class="wo-vertical-ls">
+    <li ng-repeat="fav in getFavListWeather()"
+        class="wo-content-med {{fav.weather[0].main | lowercase}}"
+        ng-class="{night: isNight(fav)}">
+      <a ng-click="updateWeatherDetailService(fav)" ui-sref="detail">
+        <div class="info">
+          <div class="city">{{fav.name}}</div>
+          <div class="time">{{fav.localTime | secToTimeStr}}</div>
+        </div>
+        <div class="icon">
+
+        </div>
+        <div class="temp">
+          {{fav.main.temp | celsius}}
+          <sup>&deg;</sup>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+</ion-content>
+
+

@@ -1,0 +1,81 @@
+.float-btn{
+  @size: 58px;
+
+  width: @size;
+  height: @size;
+  line-height: @size;
+  vertical-align: middle;
+  text-align: center;
+  font-size: @font-m;
+  border-radius: 50%;
+  box-shadow: @btn-shadow;
+  background-color: @primary;
+  color: white;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 999;
+
+  &:active{
+    opacity: 0.9;
+    box-shadow: @btn-shadow-rise;
+  }
+
+  &.pink{
+    background-color: @pink;
+  }
+
+  &.blue{
+    background: @blue;
+  }
+}
+
+.float-btn.rect{
+  @height: 50px;
+
+  width: auto;
+  height: @height;
+  line-height: @height;
+  padding: 0px 20px;
+  border-radius: 3px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.font-btn{
+
+  &.pink{
+    color: @pink;
+
+    &:active{
+      background-color: @gray;
+    }
+  }
+
+  &.blue-acitve{
+    &:active{
+      background: @blue;
+    }
+  }
+
+  &:active{
+    border-radius: 50%;
+    color: white;
+    background-color: @gray;
+  }
+}
+
+.flat-btn{
+  border-bottom: 4px solid #666;
+
+  &:active{
+    opacity: 0.85;
+    border-bottom-width: 3px;
+  }
+
+  &.blue{
+    color: white;
+    background-color: @blue;
+    border-bottom-color: @dark-blue;
+  }
+}

@@ -1,0 +1,50 @@
+.wo-header{
+  @header-height: 40px;
+
+  width: 100%;
+  height: @header-height;
+  padding: 0px @header-height;
+  position: relative;
+
+  .left-act,
+  .right-act{
+    position: absolute;
+    top: 0px;
+    height: @header-height;
+    width: @header-height;
+    line-height:@header-height;
+    vertical-align: middle;
+    text-align: center;
+    font-size: @font-m;
+  }
+
+  .left-act{
+    left: 0px;
+  }
+
+  .right-act{
+    right: 0px;
+  }
+
+  .title{
+    display:inline-block;
+    width: 100%;
+    height: @header-height;
+    line-height: @header-height;
+    vertical-align: middle;
+    text-align: center;
+    font-size: @font-l;
+  }
+}
+
+.wo-float-header{
+  z-index: 999;
+  position: absolute;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  text-align: center;
+  background-color: transparent;
+  font-size: 20px;
+  padding-top: 15px;
+}

@@ -1,0 +1,87 @@
+/*
+  Style specific for home page
+*/
+#home-search{
+  z-index: 999;
+  position: absolute;
+  height: auto;
+  width: auto;
+  top: @overall-top-offset;
+  left: @overall-padding;
+  right: @overall-padding;
+
+  .sp{
+    @size: 32px;
+
+    width: @size;
+    height: @size;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -@size / 2;
+    display: none;
+  }
+
+  .searching{
+    .sp{
+      display: block;
+    }
+
+    .font-btn{
+      opacity: 0;
+    }
+  }
+}
+
+#home-list{
+  margin-top: @overall-top-offset + 46px;
+  padding-top: 0px;
+}
+
+#home-map{
+  width: 100%;
+  height: 100%;
+}
+
+#home-map-pin{
+  @size: 100px;
+
+  height: @size;
+  width: @size;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -18px;
+  margin-top: -@size / 2 - 5px;
+  z-index: 998;
+
+  .pin{
+    width: 100%;
+  }
+}
+
+#home-map-center-marker{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -220px;
+  z-index: 999;
+}
+
+#map-center-marker-sp.sp-wrapper{
+  .sp{
+    @size: 40px;
+
+    height: @size;
+    width: @size;
+    margin-left: -@size / 2;
+    margin-top: -@size / 2;
+  }
+
+  .sp-text{
+    margin-top: 15px;
+    line-height: 20px;
+    font-size: @font-xs;
+  }
+}

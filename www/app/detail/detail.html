@@ -1,0 +1,44 @@
+<ion-view>
+  <ion-content class="wo-content" ng-class="{night: isNight(detailCtrl.model)}">
+    <!-- go back buttom -->
+    <div class="wo-header">
+        <i class="fa fa-chevron-left font-btn blue-acitve left-act" ng-click="$ionicGoBack()"></i>
+        <div class="title">{{detailCtrl.model.name}}</div>
+        <i id="detail-like" class="fa font-btn right-act" ng-class="detailCtrl.isFav()>-1 ? 'fa-heart pink' : 'fa-heart-o'" ng-click="detailCtrl.toggleFav()"></i>
+    </div>
+
+    <!-- current weather of the city -->
+    <div ng-class="{night: isNight(detailCtrl.model)}" class="wo-content-city {{detailCtrl.model.weather[0].main | lowercase}}">
+      <!-- banner image -->
+      <div class="weather-banner"></div>
+      <!-- temperature -->
+      <div class="weather-temp">{{detailCtrl.model.main.temp | celsius}}<label>&deg;</label></div>
+      <!-- auxiliary info -->
+      <div class="weather-info">
+        <div class="info-item">
+          <img src="img/weathers/wind-icon.png">
+          <div class="info">
+            <div><b>wind speed</b></div>
+            <div>{{detailCtrl.model.wind.speed}} <i>m/s</i></div>
+          </div>
+        </div>
+        <div class="info-item">
+          <img src="img/weathers/hum-icon.png">
+          <div class="info">
+            <div><b>humidity</b></div>
+            <div>{{detailCtrl.model.main.humidity}}%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- forecast part -->
+    <forecast-list></forecast-list>
+
+    <!-- history button -->
+    <button ui-sref="history" class="button button-block flat-btn blue" ng-show="!hasFav">
+      <b>View weather history</b>
+    </button>
+
+  </ion-content>
+</ion-view>

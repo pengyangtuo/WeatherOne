@@ -1,0 +1,40 @@
+svg.line-chart{
+  background-color: @global-bg-color;
+  box-shadow: @btn-shadow;
+
+  .grid{
+    stroke-width: 0.5px;
+    stroke-dasharray: 5, 5;
+    stroke: @rain-light;
+  }
+
+  .grid-fill{
+    stroke-width: 0px;
+    fill: white;
+  }
+
+  .data-line{
+    stroke-width: 4px;
+    fill: none;
+
+    &.maxs{
+      stroke: @clouds;
+    }
+
+    &.mins{
+      stroke: @gray;
+    }
+  }
+
+  .data-label{
+    fill: @dark-gray;
+    font-size: 16px;
+  }
+
+  .date-label{
+    fill: @gray;
+    font-size: 14px;
+  }
+}
+
+

@@ -1,0 +1,31 @@
+<ion-view>
+  <!-- main search form -->
+  <div class="list list-inset wo-inset" id="home-search">
+    <form class="item item-input"
+          ng-class="{'searching': searchCtrl.searching}"
+          ng-submit="searchCtrl.search()"
+          ng-controller="WoHomeController.search as searchCtrl">
+      <i class="fa fa-search placeholder-icon"></i>
+      <input type="text" placeholder="Enter city or postal code." ng-model="searchCtrl.query">
+      <i class="fa fa-times font-btn placeholder-icon offset"
+         ng-show="searchCtrl.isDirty()"
+         ng-click="searchCtrl.cleanUp()"></i>
+      <i class="fa fa-location-arrow font-btn placeholder-icon"
+         ng-click="searchCtrl.locate()"></i>
+      <div class="sp sp-circle colorful"></div>
+    </form>
+  </div>
+
+  <!-- content -->
+  <ion-nav-view name="content">
+    <!-- list/home.listcontent.html
+                    or
+         map/home.mapcontent.html -->
+  </ion-nav-view>
+
+  <!-- float button -->
+  <div class="float-btn pink" ng-click="toggleView()">
+    <i class="fa" ng-class="{'fa-map-o':isList(), 'fa-list-ul':isMap()}"></i>
+  </div>
+
+</ion-view>

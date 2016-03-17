@@ -1,0 +1,75 @@
+<ion-view>
+  <!-- spinner -->
+  <div class="sp-wrapper" ng-show="initLoad">
+    <div class="sp-overlay"></div>
+    <div class="sp sp-circle large colorful"></div>
+  </div>
+
+  <!-- error panel -->
+  <div class="full-scrn-err" ng-show="httpErr.hasErr">
+    <div class="overlay"></div>
+    <div class="err-content">
+      <div class="err-title"><i class="fa fa-exclamation-circle"></i> {{httpErr.title}}</div>
+      <div class="err-detail">{{httpErr.detail}}</div>
+      <div class="float-btn rect blue" ng-click="$ionicGoBack()">Try later</div>
+    </div>
+  </div>
+
+  <!-- close btn -->
+  <div class="float-btn" id="close-hist" ng-click="$ionicGoBack()"> <!--  -->
+    <i class="fa fa-times"></i>
+  </div>
+
+  <!-- title -->
+  <div class="wo-float-header">{{city}}</div>
+
+  <!-- main content -->
+  <ion-content direction="x"
+               delegate-handle="historyScroll"
+               on-scroll="handleScroll('historyScroll')"
+               on-scroll-complete="handleCompleteScroll('historyScroll')"
+               class="wo-content-horz">
+
+    <div id="hist-chart" class="horz-refreshable" ng-class="{'refreshing': readyToReload, 'empty': reachedMax()}">
+
+      <history-refresher class="horz-refresher"></history-refresher>
+
+      <svg ng-style="{'height':svgH+'px', 'width':svgW+'px'}" class="line-chart">
+
+        <!-- grid line fill -->
+        <polyline class="grid-fill" ng-repeat="fl in gridFill"
+                  ng-attr-points="{{fl | pointsStr}}"></polyline>
+        <!-- grid lines Y-->
+        <line class="grid" ng-repeat="ln in gridY"
+              ng-attr-x1="{{ln.x1}}" ng-attr-y1="{{ln.y1}}"
+              ng-attr-x2="{{ln.x2}}" ng-attr-y2="{{ln.y2}}"></line>
+        <!-- grid lines X-->
+        <line class="grid" ng-model="ln" ng-repeat="ln in gridX"
+              ng-attr-x1="{{ln.x1}}" ng-attr-y1="{{ln.y1}}"
+              ng-attr-x2="{{ln.x2}}" ng-attr-y2="{{ln.y2}}"></line>
+
+        <!-- polylines -->
+        <polyline ng-attr-points="{{maxtempPts | pointsStr}}" class="data-line maxs"></polyline>
+        <polyline ng-attr-points="{{mintempPts | pointsStr}}" class="data-line mins"></polyline>
+
+        <!-- max temp labels -->
+        <text class="data-label" ng-repeat="lb in maxtempLabels" text-anchor="middle"
+              ng-attr-x="{{lb.x}}" ng-attr-y="{{lb.y}}">
+          {{lb.value}}
+        </text>
+        <!-- min temp labels -->
+        <text class="data-label" ng-repeat="lb in mintempLabels" text-anchor="middle"
+              ng-attr-x="{{lb.x}}" ng-attr-y="{{lb.y}}">
+          {{lb.value}}
+        </text>
+        <!-- date labels -->
+        <text class="date-label" ng-repeat="datelb in dateLabels" text-anchor="middle"
+              ng-attr-x="{{datelb.x}}" ng-attr-y="{{datelb.y}}">
+          {{datelb.value | monthDayStr}}
+        </text>
+
+      </svg>
+
+    </div>
+  </ion-content>
+</ion-view>

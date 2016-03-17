@@ -1,0 +1,24 @@
+#detail-forecast{
+  @height: 200px;
+  @item-width: 100px;
+
+  height: @height;
+  width: 100%;
+
+  ul{
+    height: @height;
+
+    li{
+      border-radius: 2px;
+      height: @height;
+      width: @item-width;
+      margin: 1.5px;
+    }
+  }
+}
+
+#detail-like{
+  &:active{
+    background-color: @pink;
+  }
+}

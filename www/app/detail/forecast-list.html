@@ -1,0 +1,10 @@
+
+<ion-scroll zooming="true" direction="x" zooming="false" id="detail-forecast">
+  <ul class="wo-horizontal-ls">
+    <li class="{{forecast.weather[0].main | lowercase}} wo-content-mini" ng-repeat="forecast in detailCtrl.forecasts">
+      <div class="title">{{forecast.weekday | weekDayStr}}</div>
+      <div class="icon"></div>
+      <div class="temp">{{forecast.temp.day | celsius}}&deg;</div>
+    </li>
+  </ul>
+</ion-scroll>

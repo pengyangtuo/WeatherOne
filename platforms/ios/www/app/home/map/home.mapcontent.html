@@ -1,0 +1,47 @@
+<ion-view>
+  <ion-content scroll="false" ng-controller="WoHomeController.map as mapCtrl">
+
+    <!-- spinner -->
+    <div class="sp-wrapper" style="z-index: -1">
+      <div class="sp-overlay"></div>
+      <div class="sp sp-circle large colorful"></div>
+      <div class="sp-text">Loading Google Map</div>
+    </div>
+
+    <!-- map pin -->
+    <div id="home-map-pin" ng-click="getCurrentWeatherOnMap()">
+      <img class="pin" ng-src="img/weathers/pin.png">
+    </div>
+
+    <!-- map center weather -->
+    <div class="marker {{mapCenterWeather.weather[0].main | lowercase}}" id="home-map-center-marker"
+      ng-class="{night: isNight(mapCenterWeather)}"
+      ng-show="showMapWeather"
+      ng-click="showDetail()">
+      <div class="title">
+        <i class="fa fa-map-marker"></i> {{mapCenterWeather.name}}
+      </div>
+
+      <div class="icon"></div>
+
+      <div class="temp">
+        {{mapCenterWeather.main.temp | celsius}}
+        <sup>&deg;</sup>
+      </div>
+
+      <div class="cls-btn" ng-click="closeMapWeather($event)"><i class="fa fa-times"></i></div>
+
+      <!-- small spinner -->
+      <div class="sp-wrapper" id="map-center-marker-sp" ng-show="loadingCenterMapWeather">
+        <div class="sp-overlay"></div>
+        <div class="sp sp-circle large colorful"></div>
+        <div class="sp-text">Loading weather</div>
+      </div>
+    </div>
+
+    <div data-tap-disabled="true" id="home-map">
+
+    </div>
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,58 @@
+.full-scrn-err{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+  z-index: 1000;
+
+  .overlay,
+  .err-content{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+  }
+
+  .overlay{
+    background: white;
+    opacity: 0.9;
+  }
+
+  .err-content{
+    background-color: transparent;
+    padding: 100px 150px;
+
+    .err-detail,
+    .err-title{
+      position: relative;
+    }
+
+    .err-title{
+      color: @dark-gray;
+      font-size: @font-xxxl;
+      line-height: @font-xxxl;
+
+      .fa{
+        color: @clear;
+        position: absolute;
+        left: -50px;
+        top: 0px;
+      }
+    }
+
+    .err-detail{
+      color: @gray;
+      font-size: @font-l;
+      line-height: @font-l;
+      margin: 15px 0px;
+    }
+
+    .float-btn.rect{
+      position: relative;
+      left: 0px;
+      top: 0px;
+    }
+  }
+}

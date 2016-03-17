@@ -1,0 +1,187 @@
+
+.marker{
+
+  @height: 175px;
+  @width: 100px;
+  @shadow-size: 30px;
+  @arrow-size: 15px;
+  @cls-btn-size: 40px;
+
+  position: absolute;
+  cursor: pointer;
+  width: @width;
+  height: @height;
+  background-color: @global-bg-color;
+  border-radius: 4px;
+  box-shadow: @btn-shadow;
+  color: @dark-gray;
+  text-align: center;
+
+  &:active{
+    box-shadow: @btn-shadow-rise;
+  }
+
+  .marker-shadow{
+    height: @shadow-size * 0.5;
+    width: @shadow-size;
+    position: absolute;
+    left: @width / 2 - @shadow-size / 2;
+    top: @arrow-size / 2 + @height;
+    border-radius: 50%;
+    background-color: @dark-gray;
+    z-index: -1;
+  }
+
+  .arrow{
+    position: absolute;
+    top: 100%;
+    left: @width / 2 - @arrow-size;
+    border-left: @arrow-size solid transparent;
+    border-right: @arrow-size solid transparent;
+    border-top: @arrow-size solid @global-bg-color;
+  }
+
+  .title{
+    height: 50px;
+    line-height: 50px;
+    vertical-align: middle;
+    width: 100%;
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .icon{
+    width: 100%;
+    height: 70px;
+    background: url('../img/weathers/clear.png') no-repeat center center;
+    background-size: contain;
+  }
+
+  .temp{
+    width: 100%;
+    font-size: 24px;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 100;
+  }
+
+  .cls-btn{
+    height: @cls-btn-size;
+    line-height: @cls-btn-size;
+    width: @cls-btn-size;
+    position: absolute;
+    top: -@cls-btn-size / 2;
+    right: -@cls-btn-size / 2;
+    border-radius: 50%;
+    background-color: @gray;
+    color: white;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 16px;
+
+    &:active{
+      background-color: @dark-gray;
+    }
+  }
+
+  &.temporary{
+
+    font-weight: bold;
+    z-index: 999;
+    font-size: 16px;
+    padding: 20px 10px;
+    line-height: 24px;
+
+    .fa.fa-map-marker{
+      color: @blue;
+      font-size: @font-xxxl;
+      margin-bottom: 18px;
+    }
+  }
+
+  &.clouds{
+    .marker-shadow{
+      background-color: @clouds;
+    }
+    .icon{
+      background: url('../img/weathers/clouds.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.clear{
+    .marker-shadow{
+      background-color: @clear;
+    }
+    .icon{
+      background: url('../img/weathers/clear.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.rain{
+    .marker-shadow{
+      background-color: @rain;
+    }
+    .icon{
+      background: url('../img/weathers/rain.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  &.snow{
+    .marker-shadow{
+      background-color: @snow;
+    }
+    .icon{
+      background: url('../img/weathers/snow.png') no-repeat center center;
+      background-size: contain;
+    }
+  }
+
+  /* night varients */
+  &.night{
+    background-color: @night-sky;
+
+    .arrow{
+      border-top: @arrow-size solid @night-sky;
+    }
+
+    .title,
+    .temp{
+      color: white;
+    }
+
+    &.clouds{
+      .icon{
+        background: url('../img/weathers/clouds-nt.png') no-repeat center center;
+        background-size: contain;
+      }
+    }
+
+    &.clear{
+      .icon{
+        background: url('../img/weathers/clear-nt.png') no-repeat center center;
+        background-size: contain;
+      }
+    }
+
+    &.rain{
+
+      .icon{
+        background: url('../img/weathers/rain-nt.png') no-repeat center center;
+        background-size: contain;
+      }
+    }
+
+    &.snow{
+      .icon{
+        background: url('../img/weathers/snow-nt.png') no-repeat center center;
+        background-size: contain;
+      }
+    }
+  }
+
+
+
+}
