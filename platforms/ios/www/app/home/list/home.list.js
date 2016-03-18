@@ -1,12 +1,13 @@
 (function(){
-  var homeListModule = angular.module("woHomeModule.list", [])
+  var homeListModule = angular.module("woHomeModule.list", ["woModels.weather"])
     // Directive of the favourite list of location in the landing page
     .controller("WoHomeController.favList", [
       "$scope",
+      "$state",
+      "$cordovaGeolocation",
       "woLocalStorage",
-      "woWeatherService",
-      'owmServiceFactory',
-      function($scope, woLocalStorage, woWeatherService, owmServiceFactory){
+      'WeatherModel',
+      function($scope, $state, $cordovaGeolocation, woLocalStorage, WeatherModel){
         /*
          - Setups
          */
@@ -17,29 +18,14 @@
         /*
          - Private functions -
          */
-        // initialize favourite location weather list
+        // retrieve favourite weathers
         function retrieveFavWeather(){
-          $scope.loadingList = true;  // change status
-          var favList = woLocalStorage.getObject('wo-fav-list').data || [];
-          console.log(favList.filter(function(obj){return JSON.stringify(obj)}));
+          $scope.loadingList = true;  // show spinner
 
-          // get city ids
-          var ids = [];
-          for(var i=0; i<favList.length; i++){
-            ids.push(favList[i].id);
-          }
-
-          // query for batch of ids
-          owmServiceFactory.getByIds(ids).then(function(response){
-
-            var data = response.data.list;
-            for(var i=0; i<data.length; i++){
-
-              woWeatherService.saveFavWeather(data[i]);
-
-            }
-            $scope.loadingList = false;
-          });
+          WeatherModel.getFavWeathers()
+            .then(function(){
+              $scope.loadingList = false;
+            })
         }
 
         /*
@@ -47,12 +33,12 @@
          */
         // update the current weather detail object
         $scope.updateWeatherDetailService = function(weatherObj){
-          woWeatherService.updateCurWeatherDetail(weatherObj);
+          $state.go("detail", {weather: weatherObj});
         };
 
         // weather of cities in fav list
         $scope.getFavListWeather = function(){
-          return woWeatherService.favListWeather;
+          return WeatherModel.getFavWeathersFromCache();
         };
 
         // refresh the list content
@@ -60,5 +46,31 @@
           retrieveFavWeather();
           $scope.$broadcast('scroll.refreshComplete');
         };
+
+        // check whether the fav list is empty
+        $scope.isEmpty = function(){
+          return Object.keys(WeatherModel.getFavWeathersFromCache()).length == 0;
+        }
+
+        // TODO: duplicate function in WoHomeController.search
+        $scope.searchLocal = function(){
+          $scope.loadingList = true;
+
+          WeatherModel.getWeatherByCurrentGeo()
+            .then(function(response){
+              console.log("response ", response);
+              if(response.err){ // cannot get location
+                $scope.$parent.err = {
+                  msg: response.message,
+                  closable: true,
+                }
+              }else{
+                $state.go("detail", {weather: response});
+              }
+            })
+            .finally(function(){
+              $scope.loadingList = false;
+            });
+        }
     }])
 })();

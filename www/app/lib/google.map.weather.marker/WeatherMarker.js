@@ -1,7 +1,17 @@
-function WeatherMarker(latlng, map, args){
+/**
+ * Constructor of google map customed marker
+ *
+ * @param latlng  - position of the marker
+ * @param map     - container map object
+ * @param weather - weather object
+ * @constructor
+ */
+function WeatherMarker(latlng, map, weather){
   this.latlng = latlng;
-  this.args = args;
+  this.weather = weather;
   this.setMap(map);
+
+  console.log("constructor " + JSON.stringify(this.weather));
 
   // set size of the marker
   this.w = 100; // width
@@ -22,30 +32,18 @@ WeatherMarker.prototype.draw = function() {
     //  div.dataset.marker_id = self.args.marker_id;
     //}
 
-    if(this.args.isTemporary){
-      // drop a temporary marker
-      console.log("create temp marker at " + JSON.stringify(this.latlng));
-      div = this.div = this.createTmpMarker();
+    // drop weather marker
+    div = this.div = this.createWeatherMarker();
 
-      google.maps.event.addDomListener(div, "click", function(event) {
+    google.maps.event.addDomListener(div, "click", function(event) {
+      // call on the call back
+      if(self.weather.googleMapMarkerCallBack){
+        self.weather.googleMapMarkerCallBack();
+      }
 
-        self.args.clickCallBack();
-        // stop the event here
-        event.stopPropagation();
-      });
-
-    }else{
-      // drop weather marker
-      div = this.div = this.createWeatherMarker();
-
-      google.maps.event.addDomListener(div, "click", function(event) {
-        // call on the call back
-        self.args.clickCallBack(self.args.weatherModel);
-        // stop the event here
-        event.stopPropagation();
-      });
-
-    }
+      // stop the event here
+      event.stopPropagation();
+    });
 
 
     var panes = this.getPanes();
@@ -77,8 +75,8 @@ WeatherMarker.prototype.getPosition = function() {
  */
 WeatherMarker.prototype.checkIsNight = function (w){
   var localNow = new Date(),
-    sunrise = new Date(w.sys.sunrise*1000),
-    sunset = new Date(w.sys.sunset*1000);
+    sunrise = new Date(w.sunrise*1000),
+    sunset = new Date(w.sunset*1000);
 
   if(localNow > sunrise && localNow < sunset){
     return false;
@@ -86,8 +84,9 @@ WeatherMarker.prototype.checkIsNight = function (w){
     return true;
   }
 }
+
 WeatherMarker.prototype.createWeatherMarker = function(){
-  var wm = this.args.weatherModel;
+  var wm = this.weather;
   var div = document.createElement('div');
 
   // default classes
@@ -97,7 +96,7 @@ WeatherMarker.prototype.createWeatherMarker = function(){
     div.className = 'marker clouds';
   }
 
-  switch(wm.weather[0].main.toLowerCase()) {
+  switch(wm.main) {
     case 'clouds':
       if(this.checkIsNight(wm)){
         div.className = 'marker night clouds';
@@ -147,7 +146,7 @@ WeatherMarker.prototype.createWeatherMarker = function(){
 
   // temperation
   var temp = document.createElement('div');
-  temp.innerHTML = Math.round(wm.main.temp  - 273.15) + "&deg;";
+  temp.innerHTML = Math.round(wm.temp  - 273.15) + "&deg;";
   temp.className = "temp";
 
   // attache children to marker
@@ -156,44 +155,6 @@ WeatherMarker.prototype.createWeatherMarker = function(){
   div.appendChild(temp);
   div.appendChild(arrow);
   div.appendChild(shadow);
-
-  return div;
-}
-
-WeatherMarker.prototype.createTmpMarker = function(){
-
-  // main marker
-  var div = document.createElement('div');
-  div.className = 'marker temporary';
-  div.innerHTML = "<i class='fa fa-map-marker'></i><br>Show weather here";
-
-  // create arrow
-  var arrow = document.createElement('div');
-  arrow.className = "arrow";
-
-  // create small shadow
-  var shadow = document.createElement('div')
-  shadow.className = 'marker-shadow';
-
-  // create close button
-  var clsBtn = document.createElement('div')
-  clsBtn.className = "cls-btn";
-
-  var times = document.createElement('i');
-      times.className = "fa fa-times";
-  clsBtn.appendChild(times);
-
-  // attache children to marker
-  div.appendChild(arrow);
-  div.appendChild(shadow);
-  div.appendChild(clsBtn);
-
-  // close function
-  var self = this;
-  clsBtn.addEventListener('click', function(e){
-    self.remove();
-    e.stopPropagation();
-  });
 
   return div;
 }

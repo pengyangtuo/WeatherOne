@@ -1,18 +1,19 @@
 (function(){
-  var historyModule = angular.module("woHistoryModule", [])
+  var historyModule = angular.module("woHistoryModule", ["woModels.history"])
     .controller("WoHistoryController", [
       "$scope",
       "$ionicScrollDelegate",
       "$log",
+      "$stateParams",
       "viewSize",
-      "woWeatherService",
-      "wwoServiceFactory",
-      function($scope, $ionicScrollDelegate, $log, viewSize, woWeatherService, wwoServiceFactory){
-
+      "HistoryModel",
+      function($scope, $ionicScrollDelegate, $log, $stateParams, viewSize, HistoryModel){
+        console.log("in history controller");
         // setup
         $scope.logPrefix = "WoHistoryController: ";   // logger prefix string
         $scope.pace = 10;               // pace of loading new data
         $scope.maxLoad = 5;             // max number of loading could be made for each city
+        $scope.city = $stateParams.city;// set city name from the state parameter
         var vm = this;
 
         // initialize the chart
@@ -21,7 +22,6 @@
           $scope.httpErr = {};
           $scope.initLoad = true;         // initial loading flag
           $scope.loading = false;         // reloading flag
-          $scope.city = woWeatherService.curWeatherDetail.name; // get city name
           $scope.history = [];            // container of the weather history object
           $scope.queryCnt = 0;            // number of successful query made so far
           $scope.svgW = viewSize.w * $scope.queryCnt; // width of the svg content
@@ -171,12 +171,12 @@
           // check if the queryCnt has reached the limit
           if($scope.reachedMax()) return;
 
-          wwoServiceFactory.getHistory($scope.city, dateStr($scope.startDate), dateStr($scope.endDate))
+          HistoryModel.getHistory($scope.city, dateStr($scope.startDate), dateStr($scope.endDate))
             .then(  // response handlers
-              function(response){ // HTTP success
-                $log.debug($scope.logPrefix + "load history of "+$scope.city+" ("+dateStr($scope.startDate)+" to "+dateStr($scope.endDate)+")");
+              function(weather){ // HTTP success
+                //$log.debug($scope.logPrefix + "load history of "+$scope.city+" ("+dateStr($scope.startDate)+" to "+dateStr($scope.endDate)+")");
 
-                var weathers = response.data.data.weather;  // yes! there are TWO .data
+                var weathers = weather;
                 var historyBlock = [];  // history container
                 for(var i=0; i<weathers.length; i++){
                   var w = weathers[i];
@@ -235,7 +235,7 @@
          */
         $scope.$watch(
           function watchCity(){
-            return woWeatherService.curWeatherDetail.city;
+            return $scope.city;
           },
           function handleCityChange(newValue, oldValue){
             vm.init();

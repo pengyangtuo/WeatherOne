@@ -5,14 +5,14 @@
      * ---------------------- */
     .controller("WoHomeController", [
       '$scope',
+      "$rootScope",
       '$state',
-      'woLocalStorage',
-      'woWeatherService',
-      function($scope, $state, woLocalStorage, woWeatherService){
+      function($scope, $rootScope, $state){
         /*
             - Setups
          */
         var vm = this;
+        $scope.err = null;
 
         /*
             - Private functions -
@@ -52,21 +52,41 @@
           };
         };
 
-        // check if the weather is night or day
-        $scope.isNight = function(weather){
-          return woWeatherService.isNight(weather);
-        };
+        /**
+         * discard current error
+         */
+        $scope.discardErr = function(){
+          $scope.err = null;
+        }
+
+        /* online/offline watcher */
+        $scope.$watch(
+          function(){
+            return $rootScope.online;
+          },
+          function(newVal, oldVal){
+            console.log(oldVal +" -> "+newVal);
+            if(!newVal){  // offline
+              $scope.err = {
+                msg: "Please check you internet connection",
+                closable: false,
+              }
+            }else{        // online
+              $scope.err = null;
+            }
+
+          });
+
     }])
     /* ----------------------
         search controller
      * ---------------------- */
     .controller("WoHomeController.search", [
-      'woWeatherService',
-      'owmServiceFactory',
       '$state',
       '$scope',
       '$cordovaGeolocation',
-      function(woWeatherService, owmServiceFactory, $state, $scope, $cordovaGeolocation){
+      'WeatherModel',
+      function($state, $scope, $cordovaGeolocation, WeatherModel){
 
         var vm = this;
         this.query = "";        // query string in the input field
@@ -74,10 +94,18 @@
 
         // search function
         this.search = function(){
-          owmServiceFactory.getByCity(vm.query).then(function(response){
-            woWeatherService.updateCurWeatherDetail(response.data);
-            $state.go("detail");
-          });
+          WeatherModel.getWeatherByQuery(vm.query)
+            .then(function(response){
+              console.log(response);
+              if(response.err){
+                $scope.$parent.err = {
+                  msg: response.message,
+                  closable: true,
+                }
+              }else{
+                $state.go("detail", {weather: response});
+              }
+            });
         };
 
         // boolean flag indicating whether there is input string in the field
@@ -95,30 +123,21 @@
           vm.cleanUp();         // clear query
           vm.searching = true;  // start to search
 
-          // retrieve geo information of current location
-          var options = {timeout: 10000, enableHighAccuracy: true}; // geolocation options
-          $cordovaGeolocation.getCurrentPosition(options).then(
-            function(position){
-
-              // pass geo info to weather service api
-              owmServiceFactory.getByGeo(position.coords.latitude, position.coords.longitude).then(
-                function(response){
-                  woWeatherService.updateCurWeatherDetail(response.data);
-                  $state.go("detail");
-
-                  vm.searching = false;  // end search
-                },
-                function(error){
-                  vm.searching = false;  // end search
-                  console.log("owmServiceFactory: error on getByGeo");
+          WeatherModel.getWeatherByCurrentGeo()
+            .then(function(response){
+              console.log("response ", response);
+              if(response.err){ // cannot get location
+                $scope.$parent.err = {
+                  msg: response.message,
+                  closable: true,
                 }
-              )
-            },
-            function(error){
-              vm.searching = false;  // end search
-              console.log("cannot get current location");
-            }
-          );
+              }else{
+                $state.go("detail", {weather: response});
+              }
+            })
+            .finally(function(){
+              vm.searching = false;
+            });
         }
     }])
 })();

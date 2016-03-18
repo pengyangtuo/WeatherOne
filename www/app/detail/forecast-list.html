@@ -1,5 +1,12 @@
 
 <ion-scroll zooming="true" direction="x" zooming="false" id="detail-forecast">
+  <!-- spinner -->
+  <div class="sp-wrapper" ng-show="detailCtrl.loadingForecast">
+    <div class="sp-overlay"></div>
+    <div class="sp sp-circle large colorful"></div>
+  </div>
+
+  <!-- forecast content -->
   <ul class="wo-horizontal-ls">
     <li class="{{forecast.weather[0].main | lowercase}} wo-content-mini" ng-repeat="forecast in detailCtrl.forecasts">
       <div class="title">{{forecast.weekday | weekDayStr}}</div>

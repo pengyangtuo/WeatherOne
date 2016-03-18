@@ -6,8 +6,11 @@
 angular.module('starter', [
   'ionic',
   'ngCordova',
-  'owmModule',
-  'commonFilter',
+
+  'woFilter',
+  'woServices.google',
+  'woServices.localStorage',
+
   'woHomeModule',
   'woHomeModule.list',
   'woHomeModule.map',
@@ -15,7 +18,7 @@ angular.module('starter', [
   'woHistoryModule'
 ])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $window) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -31,9 +34,24 @@ angular.module('starter', [
       StatusBar.styleDefault();
     }
   });
+
+  // Add online/offline listener
+  $rootScope.online = navigator.onLine;
+  $window.addEventListener("offline", function() {
+    $rootScope.$apply(function() {
+      $rootScope.online = false;
+    });
+  }, false);
+
+  $window.addEventListener("online", function() {
+    $rootScope.$apply(function() {
+      $rootScope.online = true;
+    });
+  }, false);
 })
   // router
   .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider){
+    // disable swipe-to-go-back feature, has buggy behaviors
     $ionicConfigProvider.views.swipeBackEnabled(false);
 
     $stateProvider
@@ -56,20 +74,22 @@ angular.module('starter', [
         url: '/map',
         views: {
           "content": {
-            templateUrl: "app/home/map/home.mapcontent.html"
+            templateUrl: "app/home/map/home.mapcontent.html",
+            controller: "WoHomeController.map as mapCtrl"
           }
         }
       })
       .state("detail",{
+        cache: false,
         url: '/detail',
         templateUrl: 'app/detail/detail.html',
         controller: "WoDetailController as detailCtrl",
         params: {
-          searchRes: null
-        }
+          weather: null,
+        },
       })
       .state("history",{
-        url: '/history',
+        url: '/history/:city',
         templateUrl: 'app/history/history.html',
         controller: "WoHistoryController as historyCtrl",
         resolve:{

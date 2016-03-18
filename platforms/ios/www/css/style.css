@@ -595,6 +595,11 @@ body {
   background-color: #03a9f4;
   border-bottom-color: #01579b;
 }
+.flat-btn.pink {
+  color: white;
+  background-color: #e91e63;
+  border-bottom-color: #f44336;
+}
 /* button classes */
 /* override ionic inset input */
 .wo-inset {
@@ -955,8 +960,7 @@ svg.line-chart .date-label {
 }
 .marker .title {
   height: 50px;
-  line-height: 50px;
-  vertical-align: middle;
+  padding-top: 12px;
   width: 100%;
   font-size: 14px;
   text-align: center;
@@ -1125,6 +1129,37 @@ svg.line-chart .date-label {
   margin-top: 15px;
   line-height: 20px;
   font-size: 14px;
+}
+#home-err {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  height: 100px;
+  line-height: 100px;
+  width: 100%;
+  vertical-align: middle;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  padding: 0 20px;
+  z-index: 999;
+}
+#home-err .close {
+  position: absolute;
+  top: -25px;
+  right: 20px;
+  background-color: #b71c1c;
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 50%;
+  color: white;
+  font-size: 16px;
+}
+#home-err .close:active {
+  background-color: #6f6f6f;
 }
 /* home page style */
 #detail-forecast {

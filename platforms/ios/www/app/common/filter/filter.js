@@ -1,5 +1,5 @@
 (function(){
-  var filterModule = angular.module("commonFilter",[])
+  var filterModule = angular.module("woFilter",[])
     /*
       Filter transform F to C
      */

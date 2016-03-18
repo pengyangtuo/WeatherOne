@@ -6,7 +6,9 @@
           ng-submit="searchCtrl.search()"
           ng-controller="WoHomeController.search as searchCtrl">
       <i class="fa fa-search placeholder-icon"></i>
-      <input type="text" placeholder="Enter city or postal code." ng-model="searchCtrl.query">
+      <input type="text" placeholder="Enter city or postal code."
+             ng-model="searchCtrl.query"
+             ng-blur="searching">
       <i class="fa fa-times font-btn placeholder-icon offset"
          ng-show="searchCtrl.isDirty()"
          ng-click="searchCtrl.cleanUp()"></i>
@@ -26,6 +28,14 @@
   <!-- float button -->
   <div class="float-btn pink" ng-click="toggleView()">
     <i class="fa" ng-class="{'fa-map-o':isList(), 'fa-list-ul':isMap()}"></i>
+  </div>
+
+  <!-- error -->
+  <div id="home-err" ng-show="err">
+    <p>{{err.msg}}</p>
+    <div class="close" ng-show="err.closable" ng-click="discardErr()">
+      <i class="fa fa-times"></i>
+    </div>
   </div>
 
 </ion-view>

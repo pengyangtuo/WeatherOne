@@ -1,5 +1,5 @@
 <ion-view>
-  <ion-content scroll="false" ng-controller="WoHomeController.map as mapCtrl">
+  <ion-content scroll="false">
 
     <!-- spinner -->
     <div class="sp-wrapper" style="z-index: -1">
@@ -14,18 +14,18 @@
     </div>
 
     <!-- map center weather -->
-    <div class="marker {{mapCenterWeather.weather[0].main | lowercase}}" id="home-map-center-marker"
-      ng-class="{night: isNight(mapCenterWeather)}"
+    <div class="marker {{mapCenterWeather.data.weather[0].main | lowercase}}" id="home-map-center-marker"
+      ng-class="{night: mapCenterWeather.isNight()}"
       ng-show="showMapWeather"
-      ng-click="showDetail()">
+      ui-sref="detail({weather: mapCenterWeather})">
       <div class="title">
-        <i class="fa fa-map-marker"></i> {{mapCenterWeather.name}}
+        <i class="fa fa-map-marker"></i> {{mapCenterWeather.data.name}}
       </div>
 
       <div class="icon"></div>
 
       <div class="temp">
-        {{mapCenterWeather.main.temp | celsius}}
+        {{mapCenterWeather.data.main.temp | celsius}}
         <sup>&deg;</sup>
       </div>
 
